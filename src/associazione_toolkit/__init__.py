@@ -5,7 +5,7 @@ associazione-api-toolkit
 Shared Python toolkit for the associazione-api ecosystem.
 
 Modules:
-    - logging    → structured JSON logging with request-id propagation
+    - logging    → structured JSON logging with request-id and user-id propagation
     - decorators → @retry, @timed, @validate_env
     - pagination → offset and cursor-based pagination helpers
     - http       → resilient async HTTP client

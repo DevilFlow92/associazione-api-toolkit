@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-06-17
+
+### Added
+- `associazione_toolkit.logging` — `bind_user_id` / `get_user_id` propagate the
+  authenticated principal into the async log context, so every log line emitted
+  during an authenticated request records *who* made it alongside `request_id`.
+  Complements the auth/RBAC layer added to the `associazione-api` backend.
+- Unit tests for `associazione_toolkit.logging` (request-id, user-id and
+  end-to-end JSON rendering).
+
 ## [0.1.0] - 2026-06-07
 
 ### Added

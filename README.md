@@ -14,7 +14,7 @@ The [associazione-api](https://github.com/DevilFlow92/associazione-api) backend 
 
 | Module | What it does |
 |---|---|
-| `associazione_toolkit.logging` | Structured JSON logging with request-id context propagation via `contextvars` |
+| `associazione_toolkit.logging` | Structured JSON logging with request-id and user-id context propagation via `contextvars` |
 | `associazione_toolkit.decorators` | `@retry` (exponential backoff), `@timed` (execution logging), `@validate_env` |
 | `associazione_toolkit.pagination` | Offset-based and cursor-based pagination with Pydantic v2 models |
 | `associazione_toolkit.http` | Async HTTP client with retry, timeout, and structured error handling |
@@ -37,14 +37,20 @@ uv add associazione-api-toolkit
 ### Structured logging
 
 ```python
-from associazione_toolkit.logging import configure_logging, get_logger, bind_request_id
+from associazione_toolkit.logging import (
+    configure_logging,
+    get_logger,
+    bind_request_id,
+    bind_user_id,
+)
 
 configure_logging(level="INFO", render_json=True)
 logger = get_logger(__name__)
 
-bind_request_id("req-abc-123")
+bind_request_id("req-abc-123")   # in request middleware
+bind_user_id("user-42")          # in auth dependency, once the principal is resolved
 logger.info("member created", member_id=42)
-# → {"event": "member created", "member_id": 42, "request_id": "req-abc-123", ...}
+# → {"event": "member created", "member_id": 42, "request_id": "req-abc-123", "user_id": "user-42", ...}
 ```
 
 ### Retry decorator
